@@ -3,11 +3,13 @@ import LandingPage from "./routes/LandingPage";
 import SignupPage from "./routes/SignupPage";
 import SigninPage from "./routes/SigninPage";
 import HomePage from "./routes/HomePage";
+import ErrorPage from "./routes/ErrorPage";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <LandingPage />,
+    errorElement: <ErrorPage />,
   },
   {
     path: "/signup",
@@ -24,11 +26,7 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-  return (
-    <div>
-      <RouterProvider router={router} />
-    </div>
-  );
+  return <RouterProvider router={router} />;
 }
 
 export default App;

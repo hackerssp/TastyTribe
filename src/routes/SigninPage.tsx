@@ -56,7 +56,10 @@ const SigninPage = () => {
           <Input
             type="email"
             placeholder="Enter your email"
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) => {
+              setEmail(e.target.value);
+              setError("");
+            }}
           />
         </FormControl>
         <FormControl mb={4}>
@@ -64,7 +67,10 @@ const SigninPage = () => {
           <Input
             type="password"
             placeholder="Enter your password"
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) => {
+              setPassword(e.target.value);
+              setError("");
+            }}
           />
         </FormControl>
         <Button colorScheme="orange" size="lg" width="100%" type="submit" onClick={onLogin}>
