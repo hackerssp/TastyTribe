@@ -1,5 +1,11 @@
+import HomePage from "./routes/LandingPage";
+
 function App() {
-  return <div>hello</div>;
+  return (
+    <div>
+      <HomePage />
+    </div>
+  );
 }
 
 export default App;
