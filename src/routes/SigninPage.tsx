@@ -6,7 +6,7 @@ const SigninPage = () => {
       minHeight="100vh"
       alignItems="center"
       justifyContent="center"
-      bgGradient="linear(to right,#ff421a, #ff6b4c)"
+      bgGradient="linear(to right, #ff6b4c,#ff957e)"
     >
       <Box p={8} maxWidth="400px" width="100%" bg="white" borderRadius="md" boxShadow="lg">
         <FormControl mb={4}>
