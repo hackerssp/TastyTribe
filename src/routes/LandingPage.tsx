@@ -7,8 +7,9 @@ import friedChicken from "../assets/fried-chicken.svg";
 import burger from "../assets/burger.svg";
 import weddingCake from "../assets/wedding cake-pana.svg";
 import riceBowl from "../assets/rice-bowl.svg";
+import Navbar from "../components/Navbar";
 
-const HomePage = () => {
+const LandingPage = () => {
   const dummyCards = [
     {
       id: 1,
@@ -38,23 +39,7 @@ const HomePage = () => {
 
   return (
     <Box>
-      <HStack justifyContent={"space-between"} p={4} borderBottom="1px solid grey">
-        <Heading fontSize="2xl">
-          Tasty<span className="highlighted">Tribe</span>{" "}
-        </Heading>
-        <HStack gap={4}>
-          <Button
-            backgroundColor="brand.300"
-            color="#fff"
-            _hover={{
-              bg: "brand.400",
-            }}
-          >
-            Sign up
-          </Button>
-          <Button>Sign in</Button>
-        </HStack>
-      </HStack>
+      <Navbar />
       <Box display={{ base: "block", md: "block", lg: "flex" }} my={4}>
         <Box w={{ base: "100%", md: "100%", lg: "50%" }} p={4} textAlign="center">
           <Heading fontSize={{ base: "36px", md: "36px", lg: "56px" }}>
@@ -91,4 +76,4 @@ const HomePage = () => {
   );
 };
 
-export default HomePage;
+export default LandingPage;
