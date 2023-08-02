@@ -35,7 +35,7 @@ const router = createBrowserRouter([
       },
       {
         path: "my_recipe",
-        element: <SigninPage />,
+        element: <RecipeGrid />,
       },
     ],
   },

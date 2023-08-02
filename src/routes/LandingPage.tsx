@@ -8,6 +8,7 @@ import burger from "../assets/burger.svg";
 import weddingCake from "../assets/wedding cake-pana.svg";
 import riceBowl from "../assets/rice-bowl.svg";
 import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
 const LandingPage = () => {
   const dummyCards = [
@@ -72,6 +73,7 @@ const LandingPage = () => {
           <DummyCard key={card.id} card={card} />
         ))}
       </Flex>
+      <Footer />
     </Box>
   );
 };
