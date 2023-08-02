@@ -1,4 +1,5 @@
 import { HStack, Heading, Button } from "@chakra-ui/react";
+import { NavLink } from "react-router-dom";
 
 const Navbar = () => {
   return (
@@ -14,9 +15,11 @@ const Navbar = () => {
             bg: "brand.400",
           }}
         >
-          Sign up
+          <NavLink to="/signup">Sign up</NavLink>
         </Button>
-        <Button>Sign in</Button>
+        <Button>
+          <NavLink to="/signin">Sign in</NavLink>
+        </Button>
       </HStack>
     </HStack>
   );
