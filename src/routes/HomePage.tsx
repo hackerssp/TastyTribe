@@ -1,3 +1,4 @@
+import { useNavigate, Outlet } from "react-router-dom";
 import {
   IconButton,
   Avatar,
@@ -19,18 +20,16 @@ import {
   MenuDivider,
   MenuItem,
   MenuList,
+  Heading,
 } from "@chakra-ui/react";
-import {
-  FiHome,
-  FiTrendingUp,
-  FiCompass,
-  FiStar,
-  FiSettings,
-  FiMenu,
-  FiBell,
-  FiChevronDown,
-} from "react-icons/fi";
+import { FiCompass, FiMenu } from "react-icons/fi";
+import { BiFoodMenu } from "react-icons/bi";
+import { MdOutlineFoodBank } from "react-icons/md";
+import { PiSignOut } from "react-icons/pi";
 import { IconType } from "react-icons";
+import { useEffect, useState } from "react";
+import { onAuthStateChanged, signOut } from "firebase/auth";
+import { auth } from "../firebase/firebase";
 
 interface LinkItemProps {
   name: string;
@@ -44,6 +43,8 @@ interface NavItemProps extends FlexProps {
 
 interface MobileProps extends FlexProps {
   onOpen: () => void;
+  name: string | null;
+  email: string | null;
 }
 
 interface SidebarProps extends BoxProps {
@@ -51,14 +52,26 @@ interface SidebarProps extends BoxProps {
 }
 
 const LinkItems: Array<LinkItemProps> = [
-  { name: "Home", icon: FiHome },
-  { name: "Trending", icon: FiTrendingUp },
   { name: "Explore", icon: FiCompass },
-  { name: "Favourites", icon: FiStar },
-  { name: "Settings", icon: FiSettings },
+  { name: "Add Recipes", icon: BiFoodMenu },
+  { name: "My Recipes", icon: MdOutlineFoodBank },
+  { name: "Signout", icon: PiSignOut },
 ];
 
 const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
+  const navigate = useNavigate();
+
+  const handleSignout = () => {
+    signOut(auth)
+      .then(() => {
+        navigate("/");
+        console.log("Signed out successfully");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   return (
     <Box
       transition="3s ease"
@@ -72,15 +85,26 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
     >
       <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
         <Text fontSize="2xl" fontFamily="monospace" fontWeight="bold">
-          Logo
+          <Heading>
+            Tasty<span className="highlighted">Tribe</span>
+          </Heading>
         </Text>
         <CloseButton display={{ base: "flex", md: "none" }} onClick={onClose} />
       </Flex>
-      {LinkItems.map((link) => (
-        <NavItem key={link.name} icon={link.icon}>
-          {link.name}
-        </NavItem>
-      ))}
+      {LinkItems.map((link) => {
+        if (link.name === "Signout") {
+          return (
+            <NavItem key={link.name} icon={link.icon} onClick={handleSignout}>
+              {link.name}
+            </NavItem>
+          );
+        } else
+          return (
+            <NavItem key={link.name} icon={link.icon}>
+              {link.name}
+            </NavItem>
+          );
+      })}
     </Box>
   );
 };
@@ -117,7 +141,7 @@ const NavItem = ({ icon, children, ...rest }: NavItemProps) => {
   );
 };
 
-const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
+const MobileNav = ({ onOpen, name, email, ...rest }: MobileProps) => {
   return (
     <Flex
       ml={{ base: 0, md: 60 }}
@@ -143,48 +167,27 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
         fontSize="2xl"
         fontFamily="monospace"
         fontWeight="bold"
-      >
-        Logo
-      </Text>
+      ></Text>
 
       <HStack spacing={{ base: "0", md: "6" }}>
-        <IconButton size="lg" variant="ghost" aria-label="open menu" icon={<FiBell />} />
         <Flex alignItems={"center"}>
           <Menu>
             <MenuButton py={2} transition="all 0.3s" _focus={{ boxShadow: "none" }}>
               <HStack>
-                <Avatar
-                  size={"sm"}
-                  src={
-                    "https://images.unsplash.com/photo-1619946794135-5bc917a27793?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9"
-                  }
-                />
+                <Avatar size={"md"} />
                 <VStack
                   display={{ base: "none", md: "flex" }}
                   alignItems="flex-start"
                   spacing="1px"
                   ml="2"
                 >
-                  <Text fontSize="sm">Justina Clark</Text>
+                  <Text fontSize="sm">{name}</Text>
                   <Text fontSize="xs" color="gray.600">
-                    Admin
+                    {email}
                   </Text>
                 </VStack>
-                <Box display={{ base: "none", md: "flex" }}>
-                  <FiChevronDown />
-                </Box>
               </HStack>
             </MenuButton>
-            <MenuList
-              bg={useColorModeValue("white", "gray.900")}
-              borderColor={useColorModeValue("gray.200", "gray.700")}
-            >
-              <MenuItem>Profile</MenuItem>
-              <MenuItem>Settings</MenuItem>
-              <MenuItem>Billing</MenuItem>
-              <MenuDivider />
-              <MenuItem>Sign out</MenuItem>
-            </MenuList>
           </Menu>
         </Flex>
       </HStack>
@@ -194,6 +197,19 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
 
 const HomePage = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [name, setName] = useState<string | null>("");
+  const [email, setEmail] = useState<string | null>("");
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setName(user.displayName);
+        setEmail(user.email);
+      } else {
+        console.log("user is logged out");
+      }
+    });
+  }, []);
 
   return (
     <Box minH="100vh" bg={useColorModeValue("gray.100", "gray.900")}>
@@ -211,9 +227,9 @@ const HomePage = () => {
         </DrawerContent>
       </Drawer>
       {/* mobilenav */}
-      <MobileNav onOpen={onOpen} />
+      <MobileNav onOpen={onOpen} name={name} email={email} />
       <Box ml={{ base: 0, md: 60 }} p="4">
-        {/* Content */}
+        <Outlet />
       </Box>
     </Box>
   );
