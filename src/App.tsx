@@ -5,6 +5,7 @@ import SigninPage from "./routes/SigninPage";
 import HomePage from "./routes/HomePage";
 import ErrorPage from "./routes/ErrorPage";
 import AddRecipeForm from "./components/AppRecipeForm";
+import RecipeGrid from "./components/RecipeGrid";
 
 const router = createBrowserRouter([
   {
@@ -26,7 +27,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "explore",
-        element: <SignupPage />,
+        element: <RecipeGrid />,
       },
       {
         path: "add_recipe",
