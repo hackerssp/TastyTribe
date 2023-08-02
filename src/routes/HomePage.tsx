@@ -176,18 +176,13 @@ const MobileNav = ({ onOpen, name, email, ...rest }: MobileProps) => {
           <Menu>
             <MenuButton py={2} transition="all 0.3s" _focus={{ boxShadow: "none" }}>
               <HStack>
-                <Avatar size={"md"} />
-                <VStack
-                  display={{ base: "none", md: "flex" }}
-                  alignItems="flex-start"
-                  spacing="1px"
-                  ml="2"
-                >
+                <VStack display="flex" alignItems="flex-end" spacing="1px" ml="2">
                   <Text fontSize="sm">{name}</Text>
                   <Text fontSize="xs" color="gray.600">
                     {email}
                   </Text>
                 </VStack>
+                <Avatar size={"md"} />
               </HStack>
             </MenuButton>
           </Menu>
