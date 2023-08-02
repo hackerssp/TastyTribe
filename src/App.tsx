@@ -4,6 +4,7 @@ import SignupPage from "./routes/SignupPage";
 import SigninPage from "./routes/SigninPage";
 import HomePage from "./routes/HomePage";
 import ErrorPage from "./routes/ErrorPage";
+import AddRecipeForm from "./components/AppRecipeForm";
 
 const router = createBrowserRouter([
   {
@@ -29,7 +30,7 @@ const router = createBrowserRouter([
       },
       {
         path: "add_recipe",
-        element: <SignupPage />,
+        element: <AddRecipeForm />,
       },
       {
         path: "my_recipe",
