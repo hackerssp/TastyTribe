@@ -33,11 +33,13 @@ import { auth } from "../firebase/firebase";
 
 interface LinkItemProps {
   name: string;
+  to: string;
   icon: IconType;
 }
 
 interface NavItemProps extends FlexProps {
   icon: IconType;
+  to: string;
   children: React.ReactNode;
 }
 
@@ -52,10 +54,10 @@ interface SidebarProps extends BoxProps {
 }
 
 const LinkItems: Array<LinkItemProps> = [
-  { name: "Explore", icon: FiCompass },
-  { name: "Add Recipes", icon: BiFoodMenu },
-  { name: "My Recipes", icon: MdOutlineFoodBank },
-  { name: "Signout", icon: PiSignOut },
+  { name: "Explore", to: "/home/explore", icon: FiCompass },
+  { name: "Add Recipes", to: "/home/add_recipe", icon: BiFoodMenu },
+  { name: "My Recipes", to: "/home/my_recipe", icon: MdOutlineFoodBank },
+  { name: "Signout", to: "/", icon: PiSignOut },
 ];
 
 const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
@@ -94,13 +96,13 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
       {LinkItems.map((link) => {
         if (link.name === "Signout") {
           return (
-            <NavItem key={link.name} icon={link.icon} onClick={handleSignout}>
+            <NavItem key={link.name} to={link.to} icon={link.icon} onClick={handleSignout}>
               {link.name}
             </NavItem>
           );
         } else
           return (
-            <NavItem key={link.name} icon={link.icon}>
+            <NavItem key={link.name} to={link.to} icon={link.icon}>
               {link.name}
             </NavItem>
           );
@@ -109,9 +111,9 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
   );
 };
 
-const NavItem = ({ icon, children, ...rest }: NavItemProps) => {
+const NavItem = ({ icon, to, children, ...rest }: NavItemProps) => {
   return (
-    <Box as="a" href="#" style={{ textDecoration: "none" }} _focus={{ boxShadow: "none" }}>
+    <Box as="a" href={to} style={{ textDecoration: "none" }} _focus={{ boxShadow: "none" }}>
       <Flex
         align="center"
         p="4"
@@ -128,7 +130,7 @@ const NavItem = ({ icon, children, ...rest }: NavItemProps) => {
         {icon && (
           <Icon
             mr="4"
-            fontSize="16"
+            fontSize="20"
             _groupHover={{
               color: "white",
             }}

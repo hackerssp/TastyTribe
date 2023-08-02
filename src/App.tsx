@@ -22,6 +22,20 @@ const router = createBrowserRouter([
   {
     path: "/home",
     element: <HomePage />,
+    children: [
+      {
+        path: "explore",
+        element: <SignupPage />,
+      },
+      {
+        path: "add_recipe",
+        element: <SignupPage />,
+      },
+      {
+        path: "my_recipe",
+        element: <SigninPage />,
+      },
+    ],
   },
 ]);
 
