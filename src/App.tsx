@@ -6,6 +6,7 @@ import HomePage from "./routes/HomePage";
 import ErrorPage from "./routes/ErrorPage";
 import AddRecipeForm from "./components/AppRecipeForm";
 import RecipeGrid from "./components/RecipeGrid";
+import Blog from "./components/Blog";
 
 const router = createBrowserRouter([
   {
@@ -20,6 +21,10 @@ const router = createBrowserRouter([
   {
     path: "/signin",
     element: <SigninPage />,
+  },
+  {
+    path: "/blog",
+    element: <Blog />,
   },
   {
     path: "/home",
