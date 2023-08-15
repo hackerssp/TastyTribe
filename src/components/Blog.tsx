@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { Box, Heading, Image, Text, Link, Icon, Divider, SimpleGrid } from "@chakra-ui/react";
 import { BsFillArrowRightCircleFill } from "react-icons/bs";
 import pacncake from "../assets/blog_images/pancake.jpg";
@@ -10,14 +11,14 @@ const Blog = () => {
   return (
     <>
       <Navbar />
-      <Box paddingX={{ base: 6, lg: 40 }} mt={10}>
+      <Box paddingX={{ base: 6, lg: 40 }} mt={{ base: 5, md: 10 }}>
         <Heading textAlign="center" color="brand.400">
           Blogs
         </Heading>
         <Box
           display={{ base: "block", md: "flex", lg: "flex" }}
           gap={{ base: 6, lg: 12 }}
-          marginTop={10}
+          mt={{ base: 5, md: 10 }}
         >
           <Box
             width={{ base: "100%", md: "50%", lg: "50%" }}
